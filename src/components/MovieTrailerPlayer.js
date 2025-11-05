@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { API_OPTIONS } from "../utils/constants";
 import useMovieProviders from "../hooks/useMovieProvider";
+import { useDispatch, useSelector } from "react-redux";
+import { setMute } from "../utils/videoSlice";
 
 const MovieTrailerPlayer = ({ movieid }) => {
   const [trailerKey, setTrailerKey] = useState(null);
   const [trailerNotFound, setTrailerNotFound] = useState(false);
   const providers = useMovieProviders(movieid);
+  const isMuted = useSelector((store) => store.video.isMuted);
+  const dispatch = useDispatch();
+
 
   const fetchTrailers = async (lang = "") => {
     const url = "https://api.themoviedb.org/3/movie/"+movieid+"/videos"+(lang ? "?language="+lang :  "");
@@ -39,6 +44,7 @@ const MovieTrailerPlayer = ({ movieid }) => {
 
       if (finalTrailer?.key) {
         setTrailerKey(finalTrailer.key);
+        dispatch(setMute(true));  
       } else {
         setTrailerNotFound(true);
       }
