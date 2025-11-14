@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { API_OPTIONS } from "../utils/constants";
 import useMovieProviders from "../hooks/useMovieProvider";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import { setMute } from "../utils/videoSlice";
 
 const MovieTrailerPlayer = ({ movieid }) => {
   const [trailerKey, setTrailerKey] = useState(null);
   const [trailerNotFound, setTrailerNotFound] = useState(false);
   const providers = useMovieProviders(movieid);
-  const isMuted = useSelector((store) => store.video.isMuted);
   const dispatch = useDispatch();
 
 
