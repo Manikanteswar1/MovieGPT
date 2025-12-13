@@ -1,8 +1,12 @@
 {
-  "projects": {
-    "default": "moviegpt-92713",
-    "moviegpt": "moviegpt-92713"
-  },
-  "targets": {},
-  "etags": {}
+  "hosting": {
+    "public": "build",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
 }

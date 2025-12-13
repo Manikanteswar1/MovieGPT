@@ -26,3 +26,4 @@ export const OPENAI_KEY = process.env.REACT_APP_OPENAI_KEY;
 export const GEMINI_KEY = process.env.REACT_APP_GEMINI_KEY;
 export const FIREBASE_API_KEY = process.env.REACT_APP_FIREBASE_API_KEY;
 
+export const bgtrailerid = "ZiHXY16zd9c"; // DMD2uthghWE Varanasi code

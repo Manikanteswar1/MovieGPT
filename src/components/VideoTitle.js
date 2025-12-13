@@ -20,19 +20,20 @@ const VideoTitle = ({ title, overview }) => {
         {/* {overview} */}
         Salaar is a 2023 Indian epic action-drama film about the intense
         friendship between two childhood friends, Deva (Prabhas) and Varadha
-        (Prithviraj Sukumaran), who find themselves vying for power in the
-        fictional dystopian city-state of Khansaar after Varadha's coup attempt
-        fails.
+        (Prithviraj Sukumaran).
+        {/* Varanasi (also known by its working title, SSMB29) is a highly
+        anticipated globe-trotting action-adventure film directed by S.S.
+        Rajamouli and starring Mahesh Babu */}
       </p>
       <button className="hidden md:inline-block bg-gray-700 text-white mx-2 px-8 p-2 text-lg rounded-md bg-opacity-50 hover:bg-opacity-80">
         More Info
       </button>
       <button
         onClick={handlePlayClick}
-        className="md:bg-white bg-gray-700 md:text-black text-white px-5 md:px-10 my-1 py-1 md:py-2 text-lg rounded-md opacity-75 bg-opacity-70 hover:bg-opacity-80"
+        className="md:bg-white bg-gray-700 md:text-black text-white px-3 md:px-6 my-1 py-1 md:py-2 text-lg rounded-md opacity-75 bg-opacity-70 hover:bg-opacity-80"
       >
         {" "}
-        {isMuted ? " Unmute🔊" : "mute🔇"}
+        {isMuted ? "unmute🔊" : "mute🔇"}
       </button>
     </div>
   );
