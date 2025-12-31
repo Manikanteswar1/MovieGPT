@@ -32,7 +32,6 @@ const VideoTitle = ({ title, overview }) => {
         onClick={handlePlayClick}
         className="md:bg-white bg-gray-700 md:text-black text-white px-3 md:px-6 my-1 py-1 md:py-2 text-lg rounded-md opacity-75 bg-opacity-70 hover:bg-opacity-80"
       >
-        {" "}
         {isMuted ? "unmute🔊" : "mute🔇"}
       </button>
     </div>

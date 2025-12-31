@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import lang from "../utils/languageConstants";
 import { API_OPTIONS, GEMINI_KEY } from "../utils/constants";
@@ -9,6 +9,7 @@ const GptSearchBar = () => {
   const contentFilter = useSelector((store) => store.movies.contentFilter);
   const searchText = useRef(null);
   const dispatch = useDispatch();
+  // const [error, setError] = useState("");
   // const handleGptSearchClick = async () => {
   //   const gptQuery = "Act as Movies Recommendation system and suggest some movies for the query :" + searchText.current.value + ". only give me names of 5 movies, comma seperated like the example result given ahead. Example Result: OG, Coolie, Akhanda 2, Hari Hara Veera Mallu Kuberaa";
   //   const gptResults = await openai.chat.completions.create({
@@ -22,7 +23,9 @@ const GptSearchBar = () => {
     const data = await fetch(
       "https://api.themoviedb.org/3/search/movie?query=" +
         movie +
-        "&include_adult="+contentFilter+"&language=en-US&page=1",
+        "&include_adult=" +
+        contentFilter +
+        "&language=en-US&page=1",
       API_OPTIONS
     );
     const json = await data.json();
@@ -55,11 +58,21 @@ const GptSearchBar = () => {
           ],
         }),
       });
+      // if (!res.ok) {
+      //   if (res.status === 429) {
+      //     setError("AI limit reached. Please try again later.");
+      //     return;
+      //   } else {
+      //     setError("Something went wrong. Try again.");
+      //     return;
+      //   }
+      // }
 
       const data = await res.json();
       const responseMovies =
-        data?.candidates?.[0]?.content?.parts?.[0]?.text.split(",").map((movie) => movie.trim()) ||
-        "No response";
+        data?.candidates?.[0]?.content?.parts?.[0]?.text
+          .split(",")
+          .map((movie) => movie.trim()) || "No response";
       const promiseArray = responseMovies.map((movie) =>
         searchMovieTMDB(movie)
       );
@@ -68,29 +81,36 @@ const GptSearchBar = () => {
         addGptMovies({ movieNames: responseMovies, gptMovies: tmdbResults })
       );
     } catch (err) {
-      // console.error("Error calling Gemini API:", err);
+      console.error("Error calling Gemini API:", err);
     }
   };
 
   return (
-    <div className="pt-[35%] md:pt-[7%] flex justify-center">
-      <form
-        className="w-full md:w-1/2 bg-black grid grid-cols-12 bg-opacity-50 rounded-md"
-        onSubmit={(e) => e.preventDefault()}
-      >
-        <input
-          type="text"
-          ref={searchText}
-          className="p-4 mx-4 my-2 col-span-9 rounded-md"
-          placeholder={lang[langkey]?.getSearchPlaceholder}
-        />
-        <button
-          className="col-span-3 mr-4 my-2 py-2 px-4 md:m-2 bg-red-700 text-white rounded-lg"
-          onClick={handleGptSearchClick}
+    <div>
+      <div className="pt-[35%] md:pt-[7%] flex justify-center">
+        <form
+          className="w-full md:w-1/2 bg-black grid grid-cols-12 bg-opacity-50 rounded-md"
+          onSubmit={(e) => e.preventDefault()}
         >
-          {lang[langkey]?.search}
-        </button>
-      </form>
+          <input
+            type="text"
+            ref={searchText}
+            className="p-4 mx-4 my-2 col-span-9 rounded-md"
+            placeholder={lang[langkey]?.getSearchPlaceholder}
+          />
+          <button
+            className="col-span-3 mr-4 my-2 py-2 px-4 md:m-2 bg-red-700 text-white rounded-lg"
+            onClick={handleGptSearchClick}
+          >
+            {lang[langkey]?.search}
+          </button>
+        </form>
+      </div>
+      {/* {error && (
+        <div className="text-red-500 text-center mt-9 font-medium bg-black w-1/2 md:w-1/3 mx-auto p-2 rounded-md animate-pulse">
+          {error}
+        </div>
+      )} */}
     </div>
   );
 };

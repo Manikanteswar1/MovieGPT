@@ -10,6 +10,7 @@ import { changeLanguage } from "../utils/configSlice";
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { displayName } = useSelector((store) => store.user) || {};
   const user = useSelector((store) => store.user);
   const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
   const handleSignOut = () => {
@@ -70,13 +71,14 @@ const Header = () => {
             className="px-2 m-2 md:m-5  bg-purple-800 text-white rounded-md"
             onClick={handleGptSearchClick}
           >
-           {showGptSearch ? "Homepage" : "Gpt Search"}
+           {showGptSearch ? "Homepage" : "AI Search"}
           </button>
           <img
             alt="usericon"
             className="w-10 h-10 m-2 md:m-5 rounded-sm hidden md:block"
             src={user?.photoURL}
           />
+          <p className="text-gray-300 self-center">Hi {displayName}</p>
           <button onClick={handleSignOut} className="text-white bg-red-600 m-2 md:m-5 px-3 py-1 rounded-md">
             sign out
           </button>
